@@ -31,3 +31,11 @@ pub struct Create<'info> {
     pub user: Signer<'info>,
     pub system_program: Program<'info, System>
 }
+
+#[account]
+pub struct Campaign {
+    pub name: String,
+    pub description: String,
+    pub amount_donated: u64,
+    pub admin: Pubkey,
+}
