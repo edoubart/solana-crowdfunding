@@ -44,6 +44,26 @@ pub mod solana_crowdfunding {
 
         Ok(())
     }
+
+    pub fn donate(context: Context<Donate>, amount: u64) -> ProgramResult {
+        let instruction = anchor_lang::solana_program::system_instruction::transfer(
+            &context.accounts.user.key(),
+            &context.accounts.campaign.key(),
+            amount
+        );
+
+        anchor_lang::solana_program::program::invoke(
+            &instruction,
+            &[
+                context.accounts.user.to_account_info(),
+                context.accounts.campaign.to_account_info()
+            ]
+        );
+
+        (&mut context.accounts.campaign).amount_donated += amount;
+
+        Ok(())
+    }
 }
 
 #[derive(Accounts)]
@@ -61,6 +81,15 @@ pub struct Withdraw<'info> {
     pub campaign: Account<'info, Campaign>,
     #[account(mut)]
     pub user: Signer<'info>,
+}
+
+#[derive(Accounts)]
+pub struct Donate<'info> {
+    #[account(mut)]
+    pub campaign: Account<'info, Campaign>,
+    #[account(mut)]
+    pub user: Signer<'info>,
+    pub system_program: Program<'info, System>,
 }
 
 #[account]
