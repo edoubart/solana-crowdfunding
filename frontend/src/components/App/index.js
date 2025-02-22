@@ -1,14 +1,34 @@
 // NPM Packages
 import { useEffect, useState } from 'react';
+import { Buffer } from 'buffer';
+
+// Custom Modules
+import {
+  CreateCampaign,
+  ListCampaigns,
+  DonateCampaign,
+  WithdrawCampaign,
+} from './../campaigns';
+import {
+  createCampaign,
+  fetchCampaigns,
+  donateCampaign,
+  withdrawCampaign,
+} from './../../actions.js';
 
 // Styles
 import './index.css';
 
+// Buffer
+window.Buffer = Buffer;
+
 function App() {
   // State
   const [ walletAddress, setWalletAddress ] = useState(null);
+  const [ campaigns, setCampaigns ] = useState(null);
 
   console.log('walletAddress: ', walletAddress);
+  console.log('campaigns: ', campaigns);
 
   // Hooks
   useEffect(() => {
@@ -52,6 +72,30 @@ function App() {
   return (
     <div className="App">
       Solana Crowdfunding Dapp
+
+      <CreateCampaign
+        handlers={{
+          createCampaign,
+        }}
+      />
+
+      <ListCampaigns
+        data={{
+          campaigns,
+        }}
+      />
+
+      <DonateCampaign
+        handlers={{
+          donateCampaign,
+        }}
+      />
+
+      <WithdrawCampaign
+        handlers={{
+          donateCampaign,
+        }}
+      />
     </div>
   );
 }
