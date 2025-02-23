@@ -2,7 +2,7 @@
 import { web3, BN } from '@coral-xyz/anchor';
 
 // Custom Modules
-import { DonateCampaign } from './../index.js';
+import { DonateCampaign, WithdrawCampaign } from './../index.js';
 
 // Styles
 import './index.css';
@@ -52,6 +52,14 @@ function ListCampaigns(props) {
           handlers={{
             donateCampaign: amountInSol => {
               return props.handlers.donateCampaign(campaign, amountInSol);
+            },
+          }}
+        />
+
+        <WithdrawCampaign
+          handlers={{
+            withdrawCampaign: amountInSol => {
+              return props.handlers.withdrawCampaign(campaign, amountInSol);
             },
           }}
         />

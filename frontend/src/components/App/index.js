@@ -93,6 +93,7 @@ function App() {
         }}
         handlers={{
           donateCampaign,
+          withdrawCampaign,
         }}
       />
     </div>
