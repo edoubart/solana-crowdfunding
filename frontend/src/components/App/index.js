@@ -25,7 +25,7 @@ window.Buffer = Buffer;
 function App() {
   // State
   const [ walletAddress, setWalletAddress ] = useState(null);
-  const [ campaigns, setCampaigns ] = useState(null);
+  const [ campaigns, setCampaigns ] = useState([]);
 
   console.log('walletAddress: ', walletAddress);
   console.log('campaigns: ', campaigns);
@@ -42,6 +42,16 @@ function App() {
       window.removeEventListener('load', load);
     };
   }, []);
+
+  useEffect(() => {
+    async function fetch() {
+      let fetchedCampaigns = await fetchCampaigns();
+
+      fetchedCampaigns && setCampaigns(fetchedCampaigns);
+    }
+
+    fetch();
+  }, [walletAddress]);
 
   // Helpers
   async function fetchWalletAddress() {

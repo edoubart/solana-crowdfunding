@@ -51,8 +51,6 @@ async function createCampaign(campaign) {
       program.programId
     );
 
-    console.log('campaignAccount: ', campaignAccount);
-
     await program.rpc.create(campaign.name, campaign.description, {
       accounts: {
         campaign: campaignAccount,
@@ -73,7 +71,7 @@ async function fetchCampaigns() {
 
   const provider = getProvider();
 
-  const program = new Program(idl, programId, provider);
+  const program = new Program(idl, provider);
 
   async function fetchCampaignAcount(programAccount) {
     try {
@@ -92,9 +90,16 @@ async function fetchCampaigns() {
 
   async function fetchCampaignAcounts(programId) {
     try {
-      return await connection
-        .getProgramAccounts(programId)
+      let programAccounts = await connection.getProgramAccounts(programId);
+
+      let campaignAccounts = programAccounts
         .map(programAccount => fetchCampaignAcount(programAccount));
+
+      return campaignAccounts;
+
+      //return await connection
+      //  .getProgramAccounts(programId)
+      //  .map(programAccount => fetchCampaignAcount(programAccount));
     }
     catch (error) {
       console.error("Something went wrong fetching campaigns: " + error);
@@ -102,7 +107,11 @@ async function fetchCampaigns() {
   }
 
   try {
-    Promise.all(fetchCampaignAcounts(programId));
+    let campaignAccounts = await fetchCampaignAcounts(programId);
+
+    return Promise.all(campaignAccounts);
+
+    //Promise.all(fetchCampaignAcounts(programId));
   }
   catch (error) {
     console.error("Something went wrong fetching campaigns: " + error);
