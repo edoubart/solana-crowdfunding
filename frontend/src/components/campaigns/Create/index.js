@@ -4,10 +4,12 @@ import './index.css';
 function CreateCampaign(props) {
   // Handlers
   function handleCreateCampaign() {
-    let name = "A campaign name ...";
-    let description = "A campaign description ...";
+    let campaign = {
+      name: "A campaign name ...",
+      description: "A campaign description ...",
+    };
 
-    props.handlers.createCampaign(name, description);
+    props.handlers.createCampaign(campaign);
   }
 
   return(

@@ -35,10 +35,13 @@ function getProvider() {
 }
 
 async function createCampaign(campaign) {
+  console.log('campaign: ', campaign);
+
   try {
     const provider = getProvider();
 
-    const program = new Program(idl, programId, provider);
+    const program = new Program(idl, provider);
+    //const program = new Program(idl, programId, provider);
 
     const [ campaignAccount ] = await PublicKey.findProgramAddress(
       [
@@ -48,9 +51,11 @@ async function createCampaign(campaign) {
       program.programId
     );
 
+    console.log('campaignAccount: ', campaignAccount);
+
     await program.rpc.create(campaign.name, campaign.description, {
       accounts: {
-        campaignAccount,
+        campaign: campaignAccount,
         user: provider.wallet.publicKey,
         systemProgram: web3.SystemProgram.programId,
       },
