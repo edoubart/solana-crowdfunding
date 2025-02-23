@@ -6,8 +6,6 @@ import { Buffer } from 'buffer';
 import {
   CreateCampaign,
   ListCampaigns,
-  DonateCampaign,
-  WithdrawCampaign,
 } from './../campaigns';
 import {
   createCampaign,
@@ -93,15 +91,6 @@ function App() {
         data={{
           campaigns,
         }}
-      />
-
-      <DonateCampaign
-        handlers={{
-          donateCampaign,
-        }}
-      />
-
-      <WithdrawCampaign
         handlers={{
           donateCampaign,
         }}

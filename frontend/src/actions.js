@@ -121,7 +121,7 @@ async function fetchCampaigns() {
 async function donateCampaign(campaign, amountInSol) {
   const provider = getProvider();
 
-  const program = new Program(idl, programId, provider);
+  const program = new Program(idl, provider);
 
   let amountInLamports = new BN(amountInSol * web3.LAMPORTS_PER_SOL);
 

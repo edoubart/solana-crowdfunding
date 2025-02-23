@@ -14,7 +14,9 @@ function CreateCampaign(props) {
 
   return(
     <div className="CreateCampaign">
-      <button onClick={handleCreateCampaign}>Create a campaign ...</button>
+      <button onClick={handleCreateCampaign}>
+        Create a campaign ...
+      </button>
     </div>
   );
 }
